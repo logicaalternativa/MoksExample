@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Ejemplo de Mocks LogicaAlternativa.com</title>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<body>
+<div id="header">
+<h1>Ejemplo Mocks</h1>
+ <div id="menu">
+<!--   <ul id="nav"> -->
+<!--    <li><a href="http://www.logicaalternativa.com" target="_blanck">LogicaAlternativa.com</a></li> -->
+<!--    <li><a href="#">Archives</a></li> -->
+<!--    <li><a href="#">Sitemap</a></li> -->
+<!--   </ul> -->
+ </div>
+</div>
+<div id="content">
+<div id="right">
+<h1>Formulario:</h1>
+<form controller="controllerAddCode">	
+	<div>
+		<p>
+		Añade los codigos en la <label for="idPromotion">promoci&oacuten </strong></label>
+		<select id="promotion.idPromotion" iterable="promotions" var="item">
+				<option value="{{item.idPromotion}}">{{item.description}}</option>
+			</select>
+		</p>
+		<p>
+			Cumplimenta el siguiente formulario:
+		</p>
+		<p>
+			<label for="name">El <strong>nombre</strong> es</label><br/> 
+			<input type="text"  id="name"/>
+		</p>
+		<p> 
+			la direcci&oacute;n de <strong>correo electr&oacute;nico</strong> es <br/> 
+			<input type="text"  id="promotion.email"/> 
+		</p>
+		<p>
+			y el <strong>c&oacute;digo de promoci&oacute;n</strong><br/> 
+			<input type="text"  id="promotion.code">
+		</p>
+		<p>
+			
+		</p>	
+		<p>
+		<input type="button" value="  Enviar  "/>
+		</p>
+	</div>
+</form>
+</div>
+	
+<div id="left">
+			
+	<div class="box">
+				<h2>Enlaces :</h2>
+				<ul>
+				<li><a href="http://www.logicalaternativa.com">LogicaAlternativa.com</a></li>
+				<li><a href="https://www.github.com/logicaalternativa">GitHub</a></li>
+				</ul>
+	</div>
+</div>
+</div>
+
+<!-- Traza -->
+<script src="./js/jquery-2.1.1.min.js"></script>
+<script src="./js/view.js"></script>
+<script src="./js/model.js"></script>
+
+<!-- Fin de Traza -->
+
+</body>
+</html>
