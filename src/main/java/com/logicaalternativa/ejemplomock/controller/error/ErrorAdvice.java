@@ -2,10 +2,11 @@ package com.logicaalternativa.ejemplomock.controller.error;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,8 +24,8 @@ public class ErrorAdvice {
 	protected  static Logger logger = LoggerFactory.getLogger( ErrorAdvice.class );
 	
 	@ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ResponseRest<String> handleAllException( Exception ex,  @Value ("#{request.getAttribute('locale')}") Locale locale ) {
+   
+    public @ResponseBody ResponseRest<String> handleAllException( Exception ex, HttpServletRequest request,  Locale locale ) {
     	
     	if ( logger.isErrorEnabled() ) {
     		

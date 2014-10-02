@@ -15,10 +15,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import com.logicaalternativa.ejemplomock.interceptor.InterceptorLocale;
 
 @Configuration
 @EnableWebMvc
@@ -87,14 +84,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Disposa
     }
 	 
 	
-	
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		
-		registry.addInterceptor( new InterceptorLocale() );
-		
-	}
 
 	@Override
 	public void destroy() throws Exception {

@@ -3,24 +3,50 @@
 
 function controllerAddCode( scope ){
 	
-	var urlOperacion = 'api-rest/promotion/all';
+	var urlListPromotion = 'api-rest/promotion/all';
 	
-	scope.setValue('promotion', {});
+	var urlAddCode = 'api-rest/promotion/code/add';
 	
-	scope.setValue('name', "");
+	scope.setValue('promotionCode', {});
+	
+	var saveCodePromotion = function () {
+		
+								var promotionCode = scope.getValue('promotionCode' );
+								
+								alert( JSON.stringify(  promotionCode ) );
+								
+								$.ajax({
+								    type: 'POST',
+								    contentType: 'application/json',
+								    url: urlAddCode,				    
+//								    dataType: 'json', 
+								     data: JSON.stringify(  promotionCode ) ,
+//								    data: promotionCode,
+								    success: function(data, textStatus, jqXHR){
+								    	
+								    	alert( JSON.stringify(  data ) );
+								    	
+								    	
+								    	// escribirResultado( data, urlOperacion );
+								    },
+								    error: function(jqXHR, textStatus, errorThrown){
+								    	// escribirError(textStatus, errorThrown, urlOperacion );
+								    }
+								});	
+				 
+							}
 	
 	
 	$.ajax({
 	    type: 'GET',
 	    contentType: 'application/json',
-	    url: urlOperacion,
+	    url: urlListPromotion,
 	    dataType: "json", 
 //	    data: $('#peticion').val() ,
 	    success: function(data, textStatus, jqXHR){
 	    	
-	    	// Traza
+	    	data.response.unshift ({idPromotion: "", description: ""});	    	
 	    	scope.setValue( 'promotions', data.response );
-	    	// Fin de traza 
 	    	
 	    	// escribirResultado( data, urlOperacion );
 	    },
@@ -28,6 +54,9 @@ function controllerAddCode( scope ){
 	    	// escribirError(textStatus, errorThrown, urlOperacion );
 	    }
 	});	
+	
+	
+	scope.setAction( "saveCodePromotion", saveCodePromotion );
 	
 }
 
