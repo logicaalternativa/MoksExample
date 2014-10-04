@@ -111,6 +111,7 @@ public class AddCodeBusinessImpTest {
 		
 	}
 	
+	
 	@Test
 	public void testPromotionCodeCodeNull() {
 		
@@ -135,6 +136,35 @@ public class AddCodeBusinessImpTest {
 			logger.error( "testOk error ", e );
 			
 			fail ( "testPromotionCodeCodeNull error ".concat( e.getMessage() ) ); 
+		}
+		
+	}
+	
+	
+	@Test
+	public void testPromotionCodeCodeBlack() {
+		
+		try {
+			
+			promotionCode.setCode( "   " );
+			
+			addCodeBusinessImp.validateAndAdd( promotionCode );
+			
+			fail ("If I'm here then this is an error");
+			
+		} catch (ValidationException e) {
+			
+			final String message = e.getMessage();
+			
+			logger.info( "testPromotionCodeCodeBlack: ".concat( message )  );
+			
+			assertEquals( "validation.error.promotionCode.code.null", message );
+			
+		} catch (Exception e) {
+			
+			logger.error( "testOk error ", e );
+			
+			fail ( "testPromotionCodeCodeBlack error ".concat( e.getMessage() ) ); 
 		}
 		
 	}
@@ -168,6 +198,91 @@ public class AddCodeBusinessImpTest {
 	}
 	
 	@Test
+	public void testPromotionCodeEmailBlank() {
+		
+		try {
+			
+			promotionCode.setEmail( "     " );
+			
+			addCodeBusinessImp.validateAndAdd( promotionCode );
+			
+			fail ("If I'm here then this is an error");
+			
+		} catch (ValidationException e) {
+			
+			final String message = e.getMessage();
+			
+			logger.info( "testPromotionCodeEmailBlank: ".concat( message )  );
+			
+			assertEquals( "validation.error.promotionCode.email.null", message );
+			
+		} catch (Exception e) {
+			
+			logger.error( "testOk error ", e );
+			
+			fail ( "testPromotionCodeEmailBlank error ".concat( e.getMessage() ) ); 
+		}
+		
+	}
+	
+	@Test
+	public void testPromotionCodeEmailNoValid1() {
+		
+		try {
+			
+			promotionCode.setEmail( "email@a" );
+			
+			addCodeBusinessImp.validateAndAdd( promotionCode );
+			
+			fail ("If I'm here then this is an error");
+			
+		} catch (ValidationException e) {
+			
+			final String message = e.getMessage();
+			
+			logger.info( "testPromotionCodeEmailNoValid1: ".concat( message )  );
+			
+			assertEquals( "validation.error.promotionCode.email.novalid", message );
+			
+		} catch (Exception e) {
+			
+			logger.error( "testOk error ", e );
+			
+			fail ( "testPromotionCodeEmailNoValid1 error ".concat( e.getMessage() ) ); 
+		}
+		
+	}
+	
+	@Test
+	public void testPromotionCodeEmailNoValid2() {
+		
+		try {
+			
+			promotionCode.setEmail( "email@aaaaa.s" );
+			
+			addCodeBusinessImp.validateAndAdd( promotionCode );
+			
+			fail ("If I'm here then this is an error");
+			
+		} catch (ValidationException e) {
+			
+			final String message = e.getMessage();
+			
+			logger.info( "testPromotionCodeEmailNoValid2: ".concat( message )  );
+			
+			assertEquals( "validation.error.promotionCode.email.novalid", message );
+			
+		} catch (Exception e) {
+			
+			logger.error( "testOk error ", e );
+			
+			fail ( "testPromotionCodeEmailNoValid2 error ".concat( e.getMessage() ) ); 
+		}
+		
+	}
+	
+		
+	@Test
 	public void testPromotionCodeNameUserNull() {
 		
 		try {
@@ -191,6 +306,34 @@ public class AddCodeBusinessImpTest {
 			logger.error( "testOk error ", e );
 			
 			fail ( "testPromotionCodeNameUserNull error ".concat( e.getMessage() ) ); 
+		}
+		
+	}
+	
+	@Test
+	public void testPromotionCodeNameUserBlank() {
+		
+		try {
+			
+			promotionCode.setNameUser( "   " );
+			
+			addCodeBusinessImp.validateAndAdd( promotionCode );
+			
+			fail ("If I'm here then this is an error");
+			
+		} catch (ValidationException e) {
+			
+			final String message = e.getMessage();
+			
+			logger.info( "testPromotionCodeNameUserBlank: ".concat( message )  );
+			
+			assertEquals( "validation.error.promotionCode.name.null", message );
+			
+		} catch (Exception e) {
+			
+			logger.error( "testOk error ", e );
+			
+			fail ( "testPromotionCodeNameUserBlank error ".concat( e.getMessage() ) ); 
 		}
 		
 	}

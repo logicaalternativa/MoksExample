@@ -41,11 +41,13 @@ public class AddCodeBusinessImp implements AddCodeBusiness {
 			
 			throw new ValidationException( "validation.error.promotionCode.null" );
 			
-		} else if ( promotionCode.getCode() == null ) {
+		} else if ( promotionCode.getCode() == null
+						|| promotionCode.getCode().trim().equals( "" ) ) {
 			
 			throw new ValidationException( "validation.error.promotionCode.code.null" );
 			
-		} else if ( promotionCode.getNameUser() == null ) {
+		} else if ( promotionCode.getNameUser() == null
+						|| promotionCode.getNameUser().trim().equals( "" ) ) {
 		
 			throw new ValidationException( "validation.error.promotionCode.name.null" );
 		
@@ -60,10 +62,17 @@ public class AddCodeBusinessImp implements AddCodeBusiness {
 	
 	private void validateEmailPromotionCode( final String email ) throws ValidationException {
 		
-		if ( email == null ) {
+		if ( email == null 
+				|| email.trim().equals( "" )  ) {
 			
 			throw new ValidationException( "validation.error.promotionCode.email.null" );
 		
+		}
+		
+		if ( ! email.toLowerCase().matches("^[0-9a-z.-]+[@][0-9a-z.-]+[.]([0-9a-z]){2}[0-9a-z]*$") ) {
+			
+			throw new ValidationException( "validation.error.promotionCode.email.novalid" );
+			
 		}
 		
 		final PromotionCode promotionCodeBbDd = getPromotionCodeRepository().findOne( email );

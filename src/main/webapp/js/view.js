@@ -19,18 +19,27 @@ function processView( variableChange, valueVar, form ) {
 			return;
 		}
 		
-		
-		var properties = id.split(".");
-		
-		if ( properties[0] != variableChange ) {
+		if ( typeof $( this ).val == 'undefined'  ) {
+			
+			result =  result || false;
 			
 			return;
 		}
 		
 		
+		var properties = id.split(".");
+		
+		if ( properties[0] != variableChange ) {
+			
+			result =  result || false;
+			
+			return
+		}
+		
+		
 		object = valueVar;	
 		
-		if ( object === undefined ) {
+		if ( typeof object == 'undefined' ) {
 			
 			result =  result || false;
 			
@@ -67,8 +76,7 @@ function processView( variableChange, valueVar, form ) {
 		
 	}
 
-	$( form ).find('input').each(  loadValue  );	
-	$( form ).find('select').each(  loadValue  );
+	$( form ).find('*').each(  loadValue  );
 	
 	return {
 		
@@ -85,8 +93,6 @@ function processView( variableChange, valueVar, form ) {
 function processHtml( variableChange, valueVar, scope ){
 	
 	var htmlProcess = "";	
-	
-	var variable = "";
 	
 	var getValueFromScope = function( properties, variableChange, valueVar ) {		
 		
@@ -119,70 +125,162 @@ function processHtml( variableChange, valueVar, scope ){
 		
 	}
 	   
-	var processReg = function (key, value) {	
-
-						var patt = new RegExp( "[{]{2} *" + variable + "." + key + " *[}]{2}" ,"g");
-						
-						// Traza
-						
-						console.log( "Value: " + value );
-						
-						// Fin de traza
+	var ProcessReg = function ( variable ){ 
 		
-						htmlProcess = htmlProcess.replace( patt, value );
-						
+						var keyValue = function (key, value) {
+							
+												if ( typeof value == 'object' ) {
+													
+													var newVariable = key ? "." + key : "";
+													
+													newVariable = variable + newVariable;
+													
+													$.each( value, new ProcessReg( newVariable ) );
+													
+												}
+					
+												var patt = key 
+															? new RegExp( "[{]{2} *" + variable + "." + key + " *[}]{2}" ,"g")
+																: new RegExp( "[{]{2} *" + variable + " *[}]{2}" ,"g");
+												
+												htmlProcess = htmlProcess.replace( patt, value );
+												
+											};
+		
+						return keyValue;		
+		
 					};
+					
+	
+		var replaceHtml     = function( id, iterableValue, variable, element ) {
+		
+							htmlProcess = "";	
+		
+							if ( ! scope.templates[id] ) {
+								
+								if ( typeof element.html != 'undefined' ) {
+									
+									scope.templates[id] = element.html()
+								}
+								
+							} 
+							
+							var html = scope.templates[id];
+							
+							var proccesReg = new ProcessReg( variable );
+							
+							if ( typeof iterableValue == 'object'
+									&& iterableValue[0] ) {
+								
+								for (var i = 0; i < iterableValue.length ; i++ ){
+									
+									htmlProcess = htmlProcess + html;
+									$.each( iterableValue[i], proccesReg );
+									
+								}
+								
+							} else {
+																
+								htmlProcess =  html;
+								
+								proccesReg( "", iterableValue );
+							}
+							
+							element.html( htmlProcess );
+		
+						} 
+		
+		
+	var getHtmlBind    = function() {
+		
+							var id = $( this ).attr( "id" );
+							
+							if ( ! id  ){
+								
+								return;
+							}
+					
+							var bindVarible = $( this ).attr( "la-bind-varible" );
+							
+							if ( ! bindVarible
+									|| ( bindVarible != variableChange ) ) {
+							
+								return;
+								
+							}
+							
+							replaceHtml( id, valueVar, bindVarible,  $(this) );
+		
+					    }
+	
+	var getHtmlVisible  = function () {
+		
+							var id = $( this ).attr( "id" );
+							
+							if ( ! id  ){
+								
+								return;
+							}
+		
+							var varVisibleIf = $( this ).attr( "la-visible-if" );
+							
+							if ( ! varVisibleIf
+									|| ( varVisibleIf != variableChange )  ) {
+							
+								return;
+								
+							}						
+							
+							if ( typeof valueVar == 'object' &&  jQuery.isEmptyObject( valueVar ) ) {
+								
+								$( this ).hide();									
+								
+							}  else if ( valueVar ) {
+								
+								$( this ).show( 0 );
+								
+							} else {
+								
+								$( this ).hide();	
+								
+							}			
+							
+						}
 	
 	
 	var getHtmlIterable = function ( ) {
 		
-						var id = $( this ).attr( "id" );
-						
-						if ( ! id  ){
+							var id = $( this ).attr( "id" );
 							
-							return;
-						}											
-						
-						var iterable = $( this ).attr( "iterable" );
-						
-						variable = $( this ).attr( "var" );
-						
-						if ( ! iterable 
-								|| ! variable
-								|| ( iterable != variableChange ) ) {
-						
-							return;
+							if ( ! id  ){
+								
+								return;
+							}											
 							
-						}
-						
-						if ( ! scope.templates[id] ) {
-						
-							scope.templates[id] = $( this ).html();
-						
-						}
-						
-						var html = scope.templates[id];
-						
-						var iterableValue = valueVar;						
-						
-						for (var i = 0; i < iterableValue.length ; i++ ){
-						
-							htmlProcess = htmlProcess + html;
+							var iterable = $( this ).attr( "la-iterable" );
 							
-							$.each( iterableValue[i], processReg );
+							var variable = $( this ).attr( "la-var" );
 							
-						}
-						
-						$( this ).html( htmlProcess );
-			
-				   };
+							if ( ! iterable 
+									|| ! variable
+									|| ( iterable != variableChange ) ) {
+							
+								return;
+								
+							}
+							
+							 replaceHtml( id, valueVar, variable, $(this) );
+				
+					   };
+					 
 				   
 				   
 	var getHtmlValue = function ( ) {
 		
 							var id = $( this ).attr( "id" );
 							
-							if ( ! id  ){
+							if ( ! id  
+									|| typeof $( this ).val( ) == 'undefined' ){
 								
 								return;
 							}	
@@ -200,10 +298,12 @@ function processHtml( variableChange, valueVar, scope ){
 							
 					   }
 	
-	$( scope.getForm() ).find('select').each(  getHtmlIterable  );	
-	$( scope.getForm() ).find('iterable').each(  getHtmlIterable  );	
-	$( scope.getForm() ).find('select').each(  getHtmlValue  );	
-	$( scope.getForm() ).find('input').each(  getHtmlValue  );	
+
+	$( scope.getForm() ).find('*').each(  getHtmlIterable  );
+	$( scope.getForm() ).find('*').each(  getHtmlBind  );
+	$( scope.getForm() ).find('*').each(  getHtmlVisible  );
+	$( scope.getForm() ).find('*').each(  getHtmlValue  );
+		
 	
 }
 
@@ -292,7 +392,7 @@ var loadController = function() {
 	
 							var onClick = function(){
 														
-													var actionClick = $( this ).attr( "action-click" );
+													var actionClick = $( this ).attr( "la-action-click" );
 													
 													if ( ! actionClick  ){
 														
@@ -320,7 +420,7 @@ var loadController = function() {
 	
 	var changeControler = function () {
 								
-								var controller = $( this ).attr( "controller" );
+								var controller = $( this ).attr( "la-controller" );
 								
 								if ( ! controller ) {
 									
@@ -334,11 +434,11 @@ var loadController = function() {
 								
 								onClick = new OnClickAction( scope );
 								
-								$( this ).find( "input" ).each( onClick );
+								$( this ).find( "*" ).each( onClick );
 								
 						  };
 						  
-    $('form').each( changeControler );	
+    $('*').each( changeControler );	
 	
 }
 
