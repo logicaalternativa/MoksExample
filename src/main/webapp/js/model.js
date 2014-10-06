@@ -30,6 +30,7 @@ function controllerAddCode( scope ){
 								scope.setValue('codAddOk',  false  );
 		
 								var promotionCode = scope.getValue('promotionCode' );
+								var promotionCode2 = scope.getValue('promotionCode2	' );
 								
 								$.ajax({
 								    type: 'POST',
@@ -49,14 +50,7 @@ function controllerAddCode( scope ){
 								    		
 								    		scope.setValue('promotionCode', {});
 								    		
-								    	} else {
-								    		
-//								    		scope.setValue('promotionCode', promotionCode);
-//								    		
-//								    		scope.setValue('codAddOk',  false  );
-								    		
-								    	}
-								    	
+								    	} 
 								    	
 								    	
 								    	
@@ -105,6 +99,7 @@ function controllerAddCode( scope ){
 	
 	
 	scope.setValue('promotionCode', {});
+	scope.setValue('promotionCode2', {});
 	
 	scope.setValue('promotions', {});
 	

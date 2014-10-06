@@ -14,14 +14,10 @@ function processView( variableChange, valueVar, form ) {
 		
 		if ( ! id ) {
 			
-			result =  result || false;
-			
 			return;
 		}
 		
 		if ( typeof $( this ).val == 'undefined'  ) {
-			
-			result =  result || false;
 			
 			return;
 		}
@@ -31,8 +27,6 @@ function processView( variableChange, valueVar, form ) {
 		
 		if ( properties[0] != variableChange ) {
 			
-			result =  result || false;
-			
 			return
 		}
 		
@@ -41,17 +35,19 @@ function processView( variableChange, valueVar, form ) {
 		
 		if ( typeof object == 'undefined' ) {
 			
-			result =  result || false;
-			
 			return;
 			
 		}
 		
 		if ( properties.length == 1 ) {
 			
-			valueVar = $( this ).val();
-			
-			result =  result || true;
+			if ( valueVar != $( this ).val() ) {
+				
+				valueVar = $( this ).val();
+				
+				result =  true;
+				
+			}
 			
 			return;
 			
@@ -68,9 +64,13 @@ function processView( variableChange, valueVar, form ) {
 			
 		}
 		
-		object[ properties[ properties.length -1 ] ] = $( this ).val();
-		
-		result =  result || true;
+		if ( object[ properties[ properties.length -1 ] ] != $( this ).val() ) {
+			
+			object[ properties[ properties.length -1 ] ] = $( this ).val();
+			
+			result =  true;
+			
+		}
 		
 		return;
 		
@@ -279,7 +279,7 @@ function processHtml( variableChange, valueVar, scope ){
 									|| typeof $( this ).val( ) == 'undefined' ){
 								
 								return;
-							}	
+							}
 							
 							var properties = id.split(".");
 							
@@ -290,7 +290,12 @@ function processHtml( variableChange, valueVar, scope ){
 														
 							var value = getValueFromScope( properties, valueVar );
 							
-							$( this ).val( value );
+							if ( value != $( this ).val( ) ) {
+								
+								$( this ).val( value );					
+								
+							}
+							
 							
 					   }
 	
@@ -320,12 +325,13 @@ function Scope( form ) {
 										return;
 											
 									}
-										
-									var resultObject = processView( key2, values[key2], getForm() );
+									
+									var resultObject = processView( key2, values[key2], scope.getForm() );
 									
 									if ( resultObject.result ){
 										
 										processHtml( key2, resultObject.value, scope );
+										
 									}
 									
 								}
