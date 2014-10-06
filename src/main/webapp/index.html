@@ -21,12 +21,12 @@
 	<h1>Formulario:</h1>
 	<div la-controller="controllerAddCode">	
 		<div>
-			<div id="msgOk" class="msgOk" la-visible-if="codAddOk">
+			<div class="msgOk" la-visible-if="codAddOk">
 				<h2>
 					Código de promoción añadido
 				</h2>
 			</div>
-			<div id="msgError" class="msgError" la-visible-if="errorText" >
+			<div class="msgError" la-visible-if="errorText" >
 				<h2 id="writeErrorText" la-bind-varible="errorText">
 					ERROR: '{{errorText}}'
 				</h2>
@@ -61,8 +61,8 @@
 			<input type="button" value="  Enviar  " la-action-click="saveCodePromotion"/>
 			</p>
 		</div>
-		<div id="table" la-visible-if="promotions">
-			<table border="1" >
+		<div >
+			<table la-visible-if="promotions" >
 				<thead>
 					<td>Id</td>
 					
@@ -75,6 +75,9 @@
 						</td>
 						<td>
 							{{item.description}}
+						</td>
+						<td >
+							<span id="td" la-bind-varible="promotionCode">{{promotionCode.code}}</span>
 						</td>
 					</tr>
 				</tbody>

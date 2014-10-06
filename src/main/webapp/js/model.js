@@ -49,7 +49,15 @@ function controllerAddCode( scope ){
 								    		
 								    		scope.setValue('promotionCode', {});
 								    		
+								    	} else {
+								    		
+//								    		scope.setValue('promotionCode', promotionCode);
+//								    		
+//								    		scope.setValue('codAddOk',  false  );
+								    		
 								    	}
+								    	
+								    	
 								    	
 								    	
 								    	// escribirResultado( data, urlOperacion );

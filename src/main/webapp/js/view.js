@@ -94,7 +94,7 @@ function processHtml( variableChange, valueVar, scope ){
 	
 	var htmlProcess = "";	
 	
-	var getValueFromScope = function( properties, variableChange, valueVar ) {		
+	var getValueFromScope = function( properties, valueVar ) {		
 		
 		var object = valueVar;
 		
@@ -129,7 +129,7 @@ function processHtml( variableChange, valueVar, scope ){
 		
 						var keyValue = function (key, value) {
 							
-												if ( typeof value == 'object' ) {
+										       if ( typeof value == 'object' ) {
 													
 													var newVariable = key ? "." + key : "";
 													
@@ -203,7 +203,8 @@ function processHtml( variableChange, valueVar, scope ){
 							var bindVarible = $( this ).attr( "la-bind-varible" );
 							
 							if ( ! bindVarible
-									|| ( bindVarible != variableChange ) ) {
+									|| ( bindVarible != variableChange ) 
+									) {
 							
 								return;
 								
@@ -215,17 +216,11 @@ function processHtml( variableChange, valueVar, scope ){
 	
 	var getHtmlVisible  = function () {
 		
-							var id = $( this ).attr( "id" );
-							
-							if ( ! id  ){
-								
-								return;
-							}
-		
 							var varVisibleIf = $( this ).attr( "la-visible-if" );
 							
 							if ( ! varVisibleIf
-									|| ( varVisibleIf != variableChange )  ) {
+									|| ( varVisibleIf != variableChange ) 
+									) {
 							
 								return;
 								
@@ -263,7 +258,8 @@ function processHtml( variableChange, valueVar, scope ){
 							
 							if ( ! iterable 
 									|| ! variable
-									|| ( iterable != variableChange ) ) {
+									|| ( iterable != variableChange ) 
+									) {
 							
 								return;
 								
@@ -292,7 +288,7 @@ function processHtml( variableChange, valueVar, scope ){
 								return;
 							}
 														
-							var value = getValueFromScope( properties, variableChange, valueVar );
+							var value = getValueFromScope( properties, valueVar );
 							
 							$( this ).val( value );
 							
@@ -315,7 +311,29 @@ function Scope( form ) {
 	
 	var actions = {};
 	
-	
+	var RefreshOtherKeys = function ( key, scope ) {
+		
+								var refresh = function ( key2 ) { 
+									
+									if ( key == key2 ) {
+										
+										return;
+											
+									}
+										
+									var resultObject = processView( key2, values[key2], getForm() );
+									
+									if ( resultObject.result ){
+										
+										processHtml( key2, resultObject.value, scope );
+									}
+									
+								}
+								
+								return refresh;
+							};
+		
+		
 	var getForm = function () {
 		
 		return form;
@@ -326,7 +344,12 @@ function Scope( form ) {
 		
 		values[key] = value;
 		
-		processHtml( key, value, this );
+		var scope = this;
+		
+		processHtml( key, value, scope );
+								
+		$.each( values, new RefreshOtherKeys( key, this ) );
+		 
 		
 	}
 	
@@ -367,19 +390,6 @@ function Scope( form ) {
 	}
 	
 }
-
-var trigerSetValue = function( variableChange, valueVar, scope ) {
-	
-	processHtml( variableChange, valueVar, scope );
-	
-};
-
-
-var trigerGetValue = function( variableChange, valueVar, form ) {
-	
-	return processView( variableChange, valueVar, form );
-	
-};
 
 
 
