@@ -316,6 +316,24 @@ function Scope( form ) {
 	
 	var actions = {};
 	
+	var refreshKey     = function ( key, scope, isProccesHtml ) {
+		
+							var resultObject = processView( key, values[key], scope.getForm() );
+							
+							if ( resultObject.result ){
+								
+								values[key] = resultObject.value;
+								
+								if ( isProccesHtml ) {
+								
+									processHtml( key, resultObject.value, scope );
+									
+								}
+								
+							}
+		
+						  } 
+	
 	var RefreshOtherKeys = function ( key, scope ) {
 		
 								var refresh = function ( key2 ) { 
@@ -326,13 +344,7 @@ function Scope( form ) {
 											
 									}
 									
-									var resultObject = processView( key2, values[key2], scope.getForm() );
-									
-									if ( resultObject.result ){
-										
-										processHtml( key2, resultObject.value, scope );
-										
-									}
+									refreshKey( key2, scope, true );
 									
 								}
 								
@@ -361,13 +373,7 @@ function Scope( form ) {
 	
 	var getValue = function( key ) {
 		
-		var resultObject = processView( key, values[key], getForm() );
-		
-		if ( resultObject.result ){
-			
-			values[key] = resultObject.value;
-			
-		}		
+		refreshKey( key, this, false );	
 		
 		return values[key];		
 		
