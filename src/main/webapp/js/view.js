@@ -151,54 +151,73 @@ function processHtml( variableChange, valueVar, scope ){
 		
 					};
 					
-	
-		var replaceHtml     = function( id, iterableValue, variable, element ) {
+		var getAndCreateIdTemplate = function ( element ) {
+			
+										var idTemplate = element.attr( "la-id-template" );
+										
+										if ( ! idTemplate ) {
+											
+											var now = new Date();
+											
+											idTemplate = Math.floor(Math.random()*1000001) +"-" + now.getTime();
+											
+											element.attr( "la-id-template", idTemplate );
+											
+										}
+										
+										return idTemplate;
+										
+									}
 		
-							htmlProcess = "";	
-		
-							if ( ! scope.templates[id] ) {
-								
-								if ( typeof element.html != 'undefined' ) {
+		var getHtmlTemplate = function ( element ) {
+			
+									var idTemplate = getAndCreateIdTemplate( element );
 									
-									scope.templates[id] = element.html()
+									if ( ! scope.templates[idTemplate] ) {
+										
+										if ( typeof element.html != 'undefined' ) {
+											
+											scope.templates[idTemplate] = element.html()
+										}
+										
+									} 
+									
+									return scope.templates[idTemplate];
+			
+								}
+		
+		
+		var replaceHtml     = function( iterableValue, variable, element ) {
+		
+								htmlProcess = "";	
+								
+								var html = getHtmlTemplate( element )
+								
+								var proccesReg = new ProcessReg( variable );
+								
+								if ( typeof iterableValue == 'object'
+										&& iterableValue[0] ) {
+									
+									for (var i = 0; i < iterableValue.length ; i++ ){
+										
+										htmlProcess = htmlProcess + html;
+										$.each( iterableValue[i], proccesReg );
+										
+									}
+									
+								} else {
+																	
+									htmlProcess =  html;
+									
+									proccesReg( "", iterableValue );
 								}
 								
+								element.html( htmlProcess );
+		
 							} 
-							
-							var html = scope.templates[id];
-							
-							var proccesReg = new ProcessReg( variable );
-							
-							if ( typeof iterableValue == 'object'
-									&& iterableValue[0] ) {
-								
-								for (var i = 0; i < iterableValue.length ; i++ ){
-									
-									htmlProcess = htmlProcess + html;
-									$.each( iterableValue[i], proccesReg );
-									
-								}
-								
-							} else {
-																
-								htmlProcess =  html;
-								
-								proccesReg( "", iterableValue );
-							}
-							
-							element.html( htmlProcess );
-		
-						} 
 		
 		
 	var getHtmlBind    = function() {
-		
-							var id = $( this ).attr( "id" );
-							
-							if ( ! id  ){
-								
-								return;
-							}
 					
 							var bindVarible = $( this ).attr( "la-bind-varible" );
 							
@@ -210,7 +229,7 @@ function processHtml( variableChange, valueVar, scope ){
 								
 							}
 							
-							replaceHtml( id, valueVar, bindVarible,  $(this) );
+							replaceHtml( valueVar, bindVarible,  $(this) );
 		
 					    }
 	
@@ -245,13 +264,6 @@ function processHtml( variableChange, valueVar, scope ){
 	
 	var getHtmlIterable = function ( ) {
 		
-							var id = $( this ).attr( "id" );
-							
-							if ( ! id  ){
-								
-								return;
-							}											
-							
 							var iterable = $( this ).attr( "la-iterable" );
 							
 							var variable = $( this ).attr( "la-var" );
@@ -265,7 +277,7 @@ function processHtml( variableChange, valueVar, scope ){
 								
 							}
 							
-							 replaceHtml( id, valueVar, variable, $(this) );
+							 replaceHtml( valueVar, variable, $(this) );
 				
 					   };
 					 

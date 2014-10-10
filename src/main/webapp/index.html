@@ -27,10 +27,10 @@
 				</h2>				
 			</div>
 			<div la-visible-if="codAddOk">
-				<p><a href="#"  la-action-click="showForm">Añadir otro código</a></p>
+				<p><a href="#" la-action-click="showForm">Añadir otro código</a></p>
 			</div>
 			<div class="msgError" la-visible-if="errorText" >
-				<h2 id="writeErrorText" la-bind-varible="errorText">
+				<h2 la-bind-varible="errorText">
 					ERROR: '{{errorText}}'
 				</h2>
 			</div>
@@ -39,7 +39,7 @@
 				Añade el código en la <label for="promotionCode.promotion.id">promoci&oacuten </strong></label>
 				
 				<select id="promotionCode.promotion.idPromotion"  la-iterable="promotions" la-var="item" >
-					<option la-visible-if="promotions" id="option" value="{{item.idPromotion}}" >{{item.description}}</option>
+					<option la-visible-if="promotions" value="{{item.idPromotion}}" >{{item.description}}</option>
 				</select>
 				</p>
 				<p>
@@ -70,7 +70,7 @@
 					<td>Correo electr&oacute;nico</td>
 					<td>C&oacute;digo</td>
 				</thead>
-				<tbody id="tbody" la-iterable="promotionCodeList" la-var="item">
+				<tbody la-iterable="promotionCodeList" la-var="item">
 					<tr >
 						<td>
 							{{item.promotion.description}}
