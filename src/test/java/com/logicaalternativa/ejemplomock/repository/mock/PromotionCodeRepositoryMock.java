@@ -48,7 +48,22 @@ public class PromotionCodeRepositoryMock implements PromotionCodeRepository {
 	@Override
 	public List<PromotionCode> findAll() {
 		
-		return null;
+		final List<PromotionCode> result =  new ArrayList<PromotionCode>();
+
+		
+		if ( getPromotionCode() == null ) {
+			
+			return result;
+			
+		}
+		
+		for (PromotionCode promotionCode : getPromotionCode() ) {
+			
+			result.add( clone( promotionCode ) );
+			
+		}
+		
+		return result;
 		
 	}
 	

@@ -68,3 +68,35 @@ li { list-style-type: none;}
     color: #FFFFFF;
     border-radius: 10px;
 }
+
+
+.tableCodes {
+	width:90%;
+	height:100%;
+/* 	margin:0px; */
+	padding:0px;
+	margin-left:1.3em; 
+    margin-right:auto;
+	
+}
+.tableCodes thead tr td{
+	background-color:#BBD9EE;
+	text-align:center;
+	font-weight:bold;
+	padding:10px;
+	color:#000;
+	
+}
+
+.tableCodes tbody tr td{
+	padding:7px;
+	border:1px solid #BBD9EE;
+	
+}
+.tableCodes tbody tr:nth-child(odd){
+	background-color:#ffffff;
+}
+.tableCodes tbody tr:hover {
+	background-color:#FFF6BF;
+	
+}

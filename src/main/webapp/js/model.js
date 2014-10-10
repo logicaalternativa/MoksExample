@@ -7,21 +7,53 @@ function controllerAddCode( scope ){
 	
 	var urlAddCode = 'api-rest/promotion/code/add';
 	
-	function proccessErrorRest( data ){
+	var urlListCode = 'api-rest/promotion/code/all';
+	
+	var proccessErrorRest = function ( data ) {
 		
-		if ( data.codeResult != "OK" ) {
-			
-			scope.setValue('errorText', data.response  );
-			
-			return null;
-			
-		} else {
-			
-			return  data.response;
+			if ( data.codeResult != "OK" ) {
+				
+				scope.setValue('errorText', data.response  );
+				
+				return null;
+				
+			} else {
+				
+				return  data.response;
+				
+			}
 			
 		}
+	
+	
+	var getAllCodes = function() {
 		
-	}
+						$.ajax({
+						    type: 'GET',
+						    contentType: 'application/json',
+						    url: urlListCode,
+						    dataType: "json", 
+						    success: function(data, textStatus, jqXHR){
+						    	
+						    	var dataResponse = proccessErrorRest( data );
+						    	
+						    	if ( ! dataResponse ) {
+						    		
+						    		dataResponse = [];
+						    	}
+						    	
+						    	scope.setValue( 'promotionCodeList', dataResponse );
+						    	
+						    	// escribirResultado( data, urlOperacion );
+						    },
+						    error: function(jqXHR, textStatus, errorThrown){
+						    	// escribirError(textStatus, errorThrown, urlOperacion );
+						    }
+						});	
+						
+						
+						
+					}
 	
 	var saveCodePromotion = function () {
 		
@@ -47,13 +79,13 @@ function controllerAddCode( scope ){
 								    		
 								    		scope.setValue('codAddOk',  true  );
 								    		
+								    		scope.setValue('showForm',  false  );
+								    		
 								    		scope.setValue('promotionCode', {});
 								    		
+								    		getAllCodes();
+								    		
 								    	} 
-								    	
-								    	
-								    	
-								    	// escribirResultado( data, urlOperacion );
 								    },
 								    error: function(jqXHR, textStatus, errorThrown){
 								    	// escribirError(textStatus, errorThrown, urlOperacion );
@@ -62,13 +94,16 @@ function controllerAddCode( scope ){
 				 
 							}
 	
+	var showForm = function () {
+						
+						scope.setValue('codAddOk',  false  );
+						
+						scope.setValue('showForm',  true  );
+		
+					}
+	
 	var init = function() {
 		
-					// Traza
-		
-					alert( "PARO UN MOMENTO" );
-		
-					// fin de traza
 					$.ajax({
 					    type: 'GET',
 					    contentType: 'application/json',
@@ -90,6 +125,8 @@ function controllerAddCode( scope ){
 					    	// escribirError(textStatus, errorThrown, urlOperacion );
 					    }
 					});	
+					
+					getAllCodes();
 		
 				} 
 	
@@ -101,11 +138,17 @@ function controllerAddCode( scope ){
 	
 	scope.setValue('promotions', {});
 	
+	scope.setValue('promotionCodeList', {});
+	
 	scope.setValue('codAddOk', false );
 	
 	scope.setValue('errorText', '');
 	
+	scope.setValue('showForm', true);
+	
 	scope.setAction( "saveCodePromotion", saveCodePromotion );
+	
+	scope.setAction( "showForm", showForm );
 	
 	// Exect init
 	

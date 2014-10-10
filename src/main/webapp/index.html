@@ -24,57 +24,65 @@
 			<div class="msgOk" la-visible-if="codAddOk">
 				<h2>
 					Código de promoción añadido
-				</h2>
+				</h2>				
+			</div>
+			<div la-visible-if="codAddOk">
+				<p><a href="#"  la-action-click="showForm">Añadir otro código</a></p>
 			</div>
 			<div class="msgError" la-visible-if="errorText" >
 				<h2 id="writeErrorText" la-bind-varible="errorText">
 					ERROR: '{{errorText}}'
 				</h2>
 			</div>
-			
-			<p>
-			Añade los codigos en la <label for="promotionCode.promotion.id">promoci&oacuten </strong></label>
-			
-			<select id="promotionCode.promotion.idPromotion"  la-iterable="promotions" la-var="item" >
-				<option la-visible-if="promotions" id="option" value="{{item.idPromotion}}" >{{item.description}}</option>
-			</select>
-			</p>
-			<p>
-				Cumplimenta el siguiente formulario:
-			</p>
-			<p>
-				<label for="name">El <strong>nombre</strong> es</label><br/> 
-				<input type="text"  id="promotionCode.nameUser"/>
-			</p>
-			<p> 
-				la direcci&oacute;n de <strong>correo electr&oacute;nico</strong> es <br/> 
-				<input type="text"  id="promotionCode.email"/> 
-			</p>
-			<p>
-				y el <strong>c&oacute;digo de promoci&oacute;n</strong><br/> 
-				<input type="text" id="promotionCode.code">
-			</p>	
-			<p>
-			<input type="button" value="  Enviar  " la-action-click="saveCodePromotion"/>
-			</p>
+			<form action="#" la-visible-if="showForm">
+				<p>
+				Añade el código en la <label for="promotionCode.promotion.id">promoci&oacuten </strong></label>
+				
+				<select id="promotionCode.promotion.idPromotion"  la-iterable="promotions" la-var="item" >
+					<option la-visible-if="promotions" id="option" value="{{item.idPromotion}}" >{{item.description}}</option>
+				</select>
+				</p>
+				<p>
+					Cumplimenta el siguiente formulario:
+				</p>
+				<p>
+					<label for="name">El <strong>nombre</strong> es</label><br/> 
+					<input type="text"  id="promotionCode.nameUser"/>
+				</p>
+				<p> 
+					la direcci&oacute;n de <strong>correo electr&oacute;nico</strong> es <br/> 
+					<input type="text"  id="promotionCode.email"/> 
+				</p>
+				<p>
+					y el <strong>c&oacute;digo de promoci&oacute;n</strong><br/> 
+					<input type="text" id="promotionCode.code">
+				</p>	
+				<p>
+				<input type="button" value="  Enviar  " la-action-click="saveCodePromotion"/>
+				</p>
+			</form>
 		</div>
 		<div >
-			<table la-visible-if="promotions" >
+			<table  class="tableCodes" la-visible-if="promotionCodeList" >
 				<thead>
-					<td>Id</td>
-					
-					<td>Descripci&oacute;n</td>
+					<td>Promoci&oacute;n</td>
+					<td>Nombre</td>
+					<td>Correo electr&oacute;nico</td>
+					<td>C&oacute;digo</td>
 				</thead>
-				<tbody id="tbody" la-iterable="promotions" la-var="item">
+				<tbody id="tbody" la-iterable="promotionCodeList" la-var="item">
 					<tr >
 						<td>
-							{{item.idPromotion}}
+							{{item.promotion.description}}
 						</td>
 						<td>
-							{{item.description}}
+							{{item.nameUser}}
 						</td>
-						<td >
-							<span id="td" la-bind-varible="promotionCode">{{promotionCode.code}}</span>
+						<td>
+							{{item.email}}
+						</td>
+						<td>
+							{{item.code}}
 						</td>
 					</tr>
 				</tbody>
