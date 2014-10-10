@@ -300,15 +300,15 @@ function processHtml( variableChange, valueVar, scope ){
 					   }
 	
 
-	$( scope.getForm() ).find('*').each(  getHtmlIterable  );
-	$( scope.getForm() ).find('*').each(  getHtmlBind  );
-	$( scope.getForm() ).find('*').each(  getHtmlVisible  );
-	$( scope.getForm() ).find('*').each(  getHtmlValue  );
+	$( scope.getElementView() ).find('*').each(  getHtmlIterable  );
+	$( scope.getElementView() ).find('*').each(  getHtmlBind  );
+	$( scope.getElementView() ).find('*').each(  getHtmlVisible  );
+	$( scope.getElementView() ).find('*').each(  getHtmlValue  );
 		
 	
 }
 
-function Scope( form ) {
+function Scope( elementView ) {
 	
 	var templates = {};
 	
@@ -318,7 +318,7 @@ function Scope( form ) {
 	
 	var refreshKey     = function ( key, scope, isProccesHtml ) {
 		
-							var resultObject = processView( key, values[key], scope.getForm() );
+							var resultObject = processView( key, values[key], scope.getElementView() );
 							
 							if ( resultObject.result ){
 								
@@ -352,9 +352,9 @@ function Scope( form ) {
 							};
 		
 		
-	var getForm = function () {
+	var getElementView = function () {
 		
-		return form;
+		return elementView;
 		
 	}
 	
@@ -393,12 +393,12 @@ function Scope( form ) {
 	
 	return {
 		
-		setValue  : setValue,
-		getValue  : getValue,
-		getAction : getAction,
-		setAction : setAction,
-		getForm   : getForm,
-		templates : templates
+		setValue       : setValue,
+		getValue       : getValue,
+		getAction      : getAction,
+		setAction      : setAction,
+		getElementView : getElementView,
+		templates      : templates
 	}
 	
 }
