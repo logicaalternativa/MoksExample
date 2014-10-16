@@ -31,7 +31,7 @@ function controllerAddCode( scope ){
 		
 			if ( data.codeResult != "OK" ) {
 				
-				scope.setValue('errorText', data.response  );
+				scope.setValue('errorText', data.response ? data.response : " no determinado"  );
 				
 				return null;
 				

@@ -168,7 +168,13 @@
 			<artifactId>servlet-api</artifactId>
 			 <version>3.0-alpha-1</version>
 			<scope>provided</scope>
-		</dependency>	
+		</dependency>
+		<!-- Java Mail -->	
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.5.0-b01</version>
+		</dependency>
   </dependencies>
   <build>
 	<plugins>
