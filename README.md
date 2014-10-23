@@ -18,19 +18,19 @@ La demo es una aplicación web que mediante un formulario html sencillo llamará
 Consiste en dar de alta códigos de promoción de una web. Los datos que se piden son la promoción, el nombre, el correo electrónico y el código de promoción. Se validará que el correo electrónico no esté ya utilizado y si todo es correcto se enviará el correo a la persona y se mostrarán los datos de los códigos ya dados de alta. 
 
 Es una aplicación JAVA montada sobre Spring. Características: 
- - La capa de persistencia se utiliza Spring-Data. 
+ - La capa de persistencia se utiliza **Spring-Data**. 
  - Se usa **Maven** como herramienta de compilación, ejecución de test y construcción del proyecto.
- - Como motor de Base de datos se usa Hsqldb.
+ - Como motor de Base de datos se usa **Hsqldb**.
 
 ## Prerrequisitos
 
 Es necesario tener instalado:
-- java
+- Java
 - Maven
 
 ## Ejecutar la aplicación
 
-Descargar la aplicación y configurar los datos del servidor de correo electrónico en el fichero *application.properties* (directoriosrc/ main/resources/). Este paso no es necesario y la demo funciona correctamente sin enviar correos
+Descargar la aplicación y configurar los datos del servidor de correo electrónico en el fichero *application.properties* (directorio src/ main/resources/). Este paso no es necesario y la demo funciona correctamente sin enviar correos
 
 En el directorio de trabajo, ejecutar
 
@@ -38,7 +38,7 @@ En el directorio de trabajo, ejecutar
 $ mvn tomcat:run
 ```
 
-Con un navegador,abrir la siguiente URL 
+Con un navegador, abrir la siguiente URL 
 
 ```
 http://localhost:8080/EjemploMock/
@@ -58,5 +58,6 @@ http://localhost:8080/EjemploMock/
 [M.E.](http://www.logicaalternativa.com/mi-cv/)
 
 **[LogicaAlternativa.com] (http://www.logicaalternativa.com)**
+
 
 
