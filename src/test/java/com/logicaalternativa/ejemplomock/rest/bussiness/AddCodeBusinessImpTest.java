@@ -160,7 +160,6 @@ public class AddCodeBusinessImpTest {
 		
 	}
 	
-	
 	@Test
 	public void testPromotionCodeCodeBlack() {
 		
@@ -300,8 +299,7 @@ public class AddCodeBusinessImpTest {
 		}
 		
 	}
-	
-		
+			
 	@Test
 	public void testPromotionCodeNameUserNull() {
 		

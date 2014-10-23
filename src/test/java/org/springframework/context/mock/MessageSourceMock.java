@@ -38,7 +38,6 @@ public class MessageSourceMock implements MessageSource {
 	@Override
 	public String getMessage(String arg0, Object[] arg1, Locale arg2)
 			throws NoSuchMessageException {
-		// TODO Auto-generated method stub
 		return arg0;
 	}
 

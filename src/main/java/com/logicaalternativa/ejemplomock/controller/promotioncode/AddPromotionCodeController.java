@@ -37,7 +37,6 @@ import com.logicaalternativa.ejemplomock.controller.pojo.ResponseRest;
 import com.logicaalternativa.ejemplomock.exception.ValidationException;
 import com.logicaalternativa.ejemplomock.model.PromotionCode;
 import com.logicaalternativa.ejemplomock.rest.bussiness.AddCodeBusiness;
-import com.logicaalternativa.ejemplomock.rest.bussiness.AddCodeBusinessImpTest;
 import com.logicaalternativa.ejemplomock.rest.sender.SendMailCodePromotion;
 
 @RequestMapping("/promotion/code")

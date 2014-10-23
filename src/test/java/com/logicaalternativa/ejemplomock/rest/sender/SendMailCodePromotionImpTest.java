@@ -92,8 +92,7 @@ public class SendMailCodePromotionImpTest {
 	///////////////////////////////////////////////////////////////////////////
 	
 	@Test
-	public void test() {
-		
+	public void testOk() {
 		
 		try {
 			
