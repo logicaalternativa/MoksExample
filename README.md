@@ -28,9 +28,18 @@ Es necesario tener instalado:
 - Java
 - Maven
 
+## Ejecutar los test
+
+Para ejecutar los test, ejecutar es siguiente comando en el directorio de trabajo:
+
+```
+$ mvn test
+```
+
+
 ## Ejecutar la aplicación
 
-Descargar la aplicación y configurar los datos del servidor de correo electrónico en el fichero *application.properties* (directorio src/ main/resources/). Este paso no es necesario y la demo funciona correctamente sin enviar correos
+Configurar los datos del servidor de correo electrónico en el fichero *application.properties* (directorio src/ main/resources/). Este paso no es necesario y la demo funciona correctamente sin enviar correos.
 
 En el directorio de trabajo, ejecutar
 
